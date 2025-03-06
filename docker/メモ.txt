@@ -1,0 +1,134 @@
+参考記事
+https://laratech.jp/posts/docker-laravel11/
+
+コマンド
+docker compose exec app bash
+
+docker compose up -d　プロジェクトのトップで実行　これでサーバが立ち上がる
+docker compose down
+
+
+コンテナ動作確認
+docker compose ps
+
+プロジェクトのappに入る
+docker compose exec app bash
+入った上でララベル立ち上げ
+composer create-project laravel/laravel:^11.0 .
+
+DB入り方
+docker exec -it db bash
+mysql -u root -p
+password
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+cd src
+cp .env.example .env
+
+
+mkdir app/Services
+touch app/Services/GoogleSheetsService.php
+
+
+
+1️⃣ ps コマンドを使えるようにする
+Debian/Ubuntu 系の場合:
+
+apt update && apt install -y procps
+
+3️⃣ Apache をインストール
+もし Apache がインストールされていない場合、以下のコマンドでインストールしてください。
+
+apt update
+apt install -y apache2
+
+1️⃣ Apache を起動
+Debian/Ubuntu 系（apache2 の場合）
+
+service apache2 start
+
+vi /etc/apache2/apache2.conf
+書きを追加
+ServerName localhost
+
+php.iniに下記を追加
+log_errors = On
+error_log = /var/log/php_errors.log
+変更後はapachを再起動
+sudo apachectl restart
+sudo apachectl status
+
+ステータス確認できない場合
+sudo apachectl -M | grep status
+これでない場合
+sudo nano /etc/apache2/httpd.conf
+↓
+下記が有効か確認
+LoadModule status_module libexec/apache2/mod_status.so
+↓
+下記を追加
+<IfModule mod_status.c>
+    ExtendedStatus On
+    <Location "/server-status">
+        SetHandler server-status
+        Require host localhost
+    </Location>
+</IfModule>
+↓
+再起動
+sudo apachectl restart
+
+
+cat /var/log/apache2/error.log
+cat /var/www/html/storage/logs/laravel.log
+
+ファイル現現変更
+su -
+chown -R www-data:www-data /var/www/html
+再起動service apache2 restart
+
+
+sudo をインストールする方法
+sudo を使いたい場合は、sudo をインストールする必要があります。以下のコマンドでインストールできます。
+
+bash
+コピーする
+編集する
+apt-get update
+apt-get install sudo
+
+アパッチ問題確認
+apachectl configtest
+
+
+
+docker-compose logs nginx
+docker-compose exec nginx tail -f /var/log/nginx/error.log
+docker logs web
+/var/log/apache2/error.log
