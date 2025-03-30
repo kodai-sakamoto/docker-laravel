@@ -25,6 +25,9 @@ password
 コントローラさくせい
 php artisan make:controller GoogleSheetController
 
+ログ確認
+/var/www/html# tail -f storage/logs/laravel.log
+
 
 
 
