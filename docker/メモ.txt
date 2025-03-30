@@ -22,6 +22,9 @@ mysql -u root -p
 password
 
 
+コントローラさくせい
+php artisan make:controller GoogleSheetController
+
 
 
 
